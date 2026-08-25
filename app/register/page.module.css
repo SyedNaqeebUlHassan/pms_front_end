@@ -1,0 +1,215 @@
+/* ── Register page ───────────────────────────────────────────────────────── */
+
+.page {
+  min-height: 100vh;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 460px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.iconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  background: var(--navy-700);
+  border-radius: var(--radius);
+  font-size: 22px;
+  margin-bottom: 14px;
+}
+
+.heading {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 5px;
+}
+
+.subheading {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.card {
+  padding: 32px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.required {
+  color: var(--red);
+  margin-left: 2px;
+}
+
+/* ── Password with eye icon ──────────────────────────────────────────────── */
+.passwordWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordInput {
+  padding-right: 44px;
+}
+
+.eyeBtn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s;
+}
+
+.eyeBtn:hover {
+  color: var(--text);
+}
+
+/* Error state on confirm input */
+.inputError {
+  border-color: var(--red) !important;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
+}
+
+/* Mismatch message */
+.mismatch {
+  font-size: 12px;
+  color: var(--red);
+  margin-top: 5px;
+}
+
+/* ── Password rules list ─────────────────────────────────────────────────── */
+.rules {
+  list-style: none;
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: #f9fafb;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.rule {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  transition: color 0.15s;
+}
+
+.ruleIcon {
+  font-size: 12px;
+  font-weight: 700;
+  width: 14px;
+  flex-shrink: 0;
+}
+
+.rulePassed {
+  color: var(--green);
+}
+.ruleFailed {
+  color: var(--text-muted);
+}
+
+/* ── is_active toggle ────────────────────────────────────────────────────── */
+.toggleRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.toggle {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s;
+  padding: 0;
+}
+
+.toggleOn {
+  background: var(--green);
+}
+.toggleOff {
+  background: #d1d5db;
+}
+
+.toggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.toggleThumb {
+  position: absolute;
+  top: 3px;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: left 0.2s;
+}
+
+.toggleOn .toggleThumb {
+  left: 23px;
+}
+.toggleOff .toggleThumb {
+  left: 3px;
+}
+
+.toggleLabel {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ── Submit ───────────────────────────────────────────────────────────────── */
+.submitBtn {
+  margin-top: 4px;
+}
+
+/* ── Footer ──────────────────────────────────────────────────────────────── */
+.footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.footerLink {
+  color: var(--navy-700);
+  font-weight: 700;
+  text-decoration: underline;
+}
