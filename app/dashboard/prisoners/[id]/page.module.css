@@ -1,0 +1,559 @@
+/* ── Page container ───────────────────────────────────────────────────────── */
+.page {
+  width: 100%;
+}
+
+/* ── Top bar ─────────────────────────────────────────────────────────────── */
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  min-width: 0;
+}
+.backLink {
+  background: none;
+  border: none;
+  color: var(--primary);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+  font-family: inherit;
+  white-space: nowrap;
+}
+.backLink:hover {
+  text-decoration: underline;
+}
+.sep {
+  color: var(--text-muted);
+}
+.breadActive {
+  color: var(--text);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.topActions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.actionBtn {
+  width: auto;
+}
+
+/* ── Hero card ───────────────────────────────────────────────────────────── */
+.heroCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.heroLeft {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
+}
+.avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+  letter-spacing: 1px;
+}
+.avatarMale {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+.avatarFemale {
+  background: linear-gradient(135deg, #ec4899, #be185d);
+}
+
+.heroInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+.heroName {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.2;
+}
+.heroNumber {
+  font-family: monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+.heroBadges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+/* Hero stats strip */
+.heroStats {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 0 20px;
+}
+.statLabel {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+.statValue {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+}
+.statDivider {
+  width: 1px;
+  height: 36px;
+  background: var(--border);
+}
+
+/* ── Info grid ───────────────────────────────────────────────────────────── */
+.infoGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.infoCard {
+  padding: 20px;
+}
+
+/* ── Card title ──────────────────────────────────────────────────────────── */
+.cardTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.countBadge {
+  background: var(--border);
+  color: var(--text-muted);
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+/* ── DL (definition list) ────────────────────────────────────────────────── */
+.dl {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.dlRow {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.dlRow dt {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+.dlRow dd {
+  font-size: 14px;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── Section ─────────────────────────────────────────────────────────────── */
+.section {
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+/* ── Table (desktop) ─────────────────────────────────────────────────────── */
+.tableWrap {
+  overflow-x: auto;
+  margin-top: 4px;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 560px;
+}
+.table th {
+  text-align: left;
+  padding: 8px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.table td {
+  padding: 12px;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+.table tr:last-child td {
+  border-bottom: none;
+}
+.table tbody tr:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.idx {
+  color: var(--text-muted);
+  font-size: 12px;
+  text-align: center;
+  width: 36px;
+}
+.reasonCell {
+  max-width: 220px;
+  word-break: break-word;
+}
+.nowrap {
+  white-space: nowrap;
+}
+.muted {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 13px;
+}
+.mono {
+  font-family: monospace;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+}
+.compNum {
+  font-weight: 600;
+}
+
+/* ── Mobile cards (hidden on desktop) ───────────────────────────────────── */
+.mobileCards {
+  display: none;
+}
+.mobileCard {
+  border: 1px solid var(--border);
+  border-radius: var(--radius, 8px);
+  overflow: hidden;
+  margin-top: 10px;
+}
+.mobileCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.02);
+  border-bottom: 1px solid var(--border);
+}
+.mobileCardNum {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+.mobileCardBody {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.mobileRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+}
+.mobileLabel {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Empty state ─────────────────────────────────────────────────────────── */
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 36px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+.emptyIcon {
+  font-size: 20px;
+}
+
+/* ── Status badges ───────────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badgeActive {
+  background: #dcfce7;
+  color: #15803d;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.badgeReleased {
+  background: #f1f5f9;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.badgeMale {
+  background: #dbeafe;
+  color: #1d4ed8;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.badgeFemale {
+  background: #fce7f3;
+  color: #be185d;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* punishment / fir badge variants */
+.badgeGreen {
+  background: #dcfce7;
+  color: #15803d;
+}
+.badgeYellow {
+  background: #fef9c3;
+  color: #854d0e;
+}
+.badgeBlue {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+.badgeRed {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+.badgeGray {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+/* ── Loading / error center ──────────────────────────────────────────────── */
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 320px;
+  text-align: center;
+}
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.loadingText {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+.errorIcon {
+  font-size: 40px;
+}
+.errorMsg {
+  font-size: 14px;
+  color: var(--text-muted);
+  max-width: 300px;
+}
+
+/* ── Release modal ───────────────────────────────────────────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+  padding: 20px;
+}
+.modal {
+  background: var(--card-bg, #fff);
+  border-radius: var(--radius, 8px);
+  padding: 32px 28px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  animation: popIn 0.2s ease;
+}
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.modalIcon {
+  font-size: 44px;
+  margin-bottom: 12px;
+}
+.modalTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.modalText {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin-bottom: 24px;
+}
+.modalActions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.modalActions .btn {
+  width: auto;
+  min-width: 110px;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .heroCard {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .heroStats {
+    gap: 0;
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .statItem {
+    padding: 8px 16px;
+    align-items: flex-start;
+  }
+  .statDivider {
+    height: 28px;
+  }
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
+
+  /* swap table → mobile cards */
+  .tableWrap {
+    display: none;
+  }
+  .mobileCards {
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroLeft {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .avatar {
+    width: 56px;
+    height: 56px;
+    font-size: 20px;
+  }
+  .heroName {
+    font-size: 18px;
+  }
+  .topBar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .topActions {
+    width: 100%;
+  }
+  .actionBtn {
+    flex: 1;
+  }
+  .heroStats {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .statDivider {
+    display: none;
+  }
+  .statItem {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0;
+  }
+}

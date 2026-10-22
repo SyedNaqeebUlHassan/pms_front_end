@@ -3,7 +3,7 @@ export type UserRole = "admin" | "jailor";
 export interface User {
   id: string;
   name: string;
-  user_name: string;
+  email: string;
   role: UserRole;
   is_active: boolean;
 }
@@ -11,7 +11,7 @@ export interface User {
 export interface LoginUser {
   id: string;
   name: string;
-  user_name: string;
+  email: string;
   role: UserRole;
   is_active: boolean;
 }
@@ -22,6 +22,11 @@ export interface AuthResponse {
   refresh_token: string;
   user: LoginUser;
   expires_in: number;
+}
+
+export interface RefreshResponse {
+  access_token: string;
+  refresh_token: string;
 }
 
 export interface UsersResponse {

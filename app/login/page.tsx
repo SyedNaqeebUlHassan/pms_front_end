@@ -14,7 +14,7 @@ export default function LoginPage() {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const _hasHydrated = useAuthStore((s) => s._hasHydrated);
 
-  const [form, setForm] = useState({ user_name: "", password: "" });
+  const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -32,23 +32,27 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.user_name.trim() || !form.password.trim()) {
+    if (!form.email.trim() || !form.password.trim()) {
       setError("Both fields are required.");
       return;
     }
     setLoading(true);
     setError("");
     try {
-      const res = await authApi.login(form.user_name.trim(), form.password);
-      const { access_token, user } = res.data;
+      const res = await authApi.login(form.email.trim(), form.password);
+      const { access_token, refresh_token, user } = res.data;
 
-      setAuth(access_token, user);
-      document.cookie = `pms-token=${access_token}; path=/; max-age=${60 * 60 * 24}`;
+      // Store both tokens + user in Zustand
+      setAuth(access_token, refresh_token, user);
+
+      // Set access token cookie for middleware route protection
+      const maxAge = 60 * 60 * 24 * 7; // 7 days
+      document.cookie = `pms-token=${access_token}; path=/; max-age=${maxAge}`;
 
       toast.success(`Welcome back, ${user.name}!`);
       router.push("/dashboard");
     } catch (err: unknown) {
-      const e = err as { response?: { data?: { message?: string } } };
+      const e = err as { response?: { data?: { message?: string | string[] } } };
       const msg = e.response?.data?.message ?? "Invalid credentials. Please try again.";
       setError(Array.isArray(msg) ? msg[0] : msg);
     } finally {
@@ -72,7 +76,7 @@ export default function LoginPage() {
             <br />
             System
           </h1>
-          <p className={styles.brandSub}>Developed by Syed Naqeeb Ul Hassan . bc-230210221</p>
+          <p className={styles.brandSub}>Developed by Syed Naqeeb Ul Hassan · bc-230210221</p>
         </div>
         <div className={styles.brandFooter}>PMS v1.0 · CS619 Spring 2026 · Virtual University of Pakistan</div>
       </div>
@@ -92,16 +96,16 @@ export default function LoginPage() {
 
           <form className={styles.form} onSubmit={handleSubmit} noValidate>
             <div className={styles.field}>
-              <label htmlFor="user_name" className="label">
-                Username
+              <label htmlFor="email" className="label">
+                Email
               </label>
               <input
-                id="user_name"
-                name="user_name"
-                type="text"
-                autoComplete="username"
-                placeholder="Enter your username"
-                value={form.user_name}
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                placeholder="Enter your email"
+                value={form.email}
                 onChange={handleChange}
                 className="input"
                 disabled={loading}
@@ -112,7 +116,6 @@ export default function LoginPage() {
               <label htmlFor="password" className="label">
                 Password
               </label>
-              {/* ── Password wrapper with eye toggle ── */}
               <div className={styles.passwordWrap}>
                 <input
                   id="password"
@@ -133,7 +136,6 @@ export default function LoginPage() {
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? (
-                    /* Eye-off icon */
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="18"
@@ -150,7 +152,6 @@ export default function LoginPage() {
                       <line x1="1" y1="1" x2="23" y2="23" />
                     </svg>
                   ) : (
-                    /* Eye icon */
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="18"

@@ -3,11 +3,13 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import { LoginUser } from "@/types/user";
 
 interface AuthState {
-  token: string | null;
+  accessToken: string | null;
+  refreshToken: string | null;
   user: LoginUser | null;
   _hasHydrated: boolean;
 
-  setAuth: (token: string, user: LoginUser) => void;
+  setAuth: (accessToken: string, refreshToken: string, user: LoginUser) => void;
+  setTokens: (accessToken: string, refreshToken: string) => void;
   clearAuth: () => void;
   setHasHydrated: (val: boolean) => void;
   isAuthenticated: () => boolean;
@@ -17,17 +19,20 @@ interface AuthState {
 export const useAuthStore = create<AuthState>()(
   persist(
     (set, get) => ({
-      token: null,
+      accessToken: null,
+      refreshToken: null,
       user: null,
       _hasHydrated: false,
 
-      setAuth: (token, user) => set({ token, user }),
+      setAuth: (accessToken, refreshToken, user) => set({ accessToken, refreshToken, user }),
 
-      clearAuth: () => set({ token: null, user: null }),
+      setTokens: (accessToken, refreshToken) => set({ accessToken, refreshToken }),
+
+      clearAuth: () => set({ accessToken: null, refreshToken: null, user: null }),
 
       setHasHydrated: (val) => set({ _hasHydrated: val }),
 
-      isAuthenticated: () => !!get().token,
+      isAuthenticated: () => !!get().accessToken,
 
       isAdmin: () => get().user?.role === "admin",
     }),

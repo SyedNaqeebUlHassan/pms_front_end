@@ -9,14 +9,13 @@ import styles from "./page.module.css";
 
 interface FormState {
   name: string;
-  user_name: string;
+  email: string;
   password: string;
   confirmPassword: string;
   role: "admin" | "jailor";
   is_active: boolean;
 }
 
-// Password rules — must match backend DTO Matches() regex
 const PASSWORD_RULES = [
   { label: "At least 8 characters", test: (p: string) => p.length >= 8 },
   { label: "Maximum 20 characters", test: (p: string) => p.length <= 20 },
@@ -25,12 +24,47 @@ const PASSWORD_RULES = [
   { label: "At least one number or special char", test: (p: string) => /(\d|\W)/.test(p) },
 ];
 
+const EyeOffIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
+    <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
+    <line x1="1" y1="1" x2="23" y2="23" />
+  </svg>
+);
+
+const EyeIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+    <circle cx="12" cy="12" r="3" />
+  </svg>
+);
+
 export default function RegisterPage() {
   const router = useRouter();
 
   const [form, setForm] = useState<FormState>({
     name: "",
-    user_name: "",
+    email: "",
     password: "",
     confirmPassword: "",
     role: "jailor",
@@ -55,14 +89,11 @@ export default function RegisterPage() {
   const validate = (): string | null => {
     if (!form.name.trim()) return "Full name is required.";
     if (form.name.trim().length < 3) return "Name must be at least 3 characters.";
-    if (!form.user_name.trim()) return "Username is required.";
-    if (form.user_name.trim().length < 3) return "Username must be at least 3 characters.";
+    if (!form.email.trim()) return "Email is required.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) return "Please enter a valid email address.";
     if (!form.password) return "Password is required.";
-
-    // Check all password rules
     const failedRule = PASSWORD_RULES.find((r) => !r.test(form.password));
     if (failedRule) return failedRule.label + " (password requirement not met).";
-
     if (!form.confirmPassword) return "Please confirm your password.";
     if (form.password !== form.confirmPassword) return "Passwords do not match.";
     return null;
@@ -75,13 +106,12 @@ export default function RegisterPage() {
       setError(validationError);
       return;
     }
-
     setLoading(true);
     setError("");
     try {
       await authApi.register({
         name: form.name.trim(),
-        user_name: form.user_name.trim(),
+        email: form.email.trim(),
         password: form.password,
         role: form.role,
         is_active: form.is_active,
@@ -102,7 +132,6 @@ export default function RegisterPage() {
   return (
     <div className={styles.page}>
       <div className={styles.wrapper}>
-        {/* Header */}
         <div className={styles.header}>
           <h1 className={styles.heading}>Create Account</h1>
           <p className={styles.subheading}>Register to access the Prison Management System</p>
@@ -134,18 +163,18 @@ export default function RegisterPage() {
               />
             </div>
 
-            {/* Username */}
+            {/* Email */}
             <div className={styles.field}>
-              <label htmlFor="user_name" className="label">
-                Username <span className={styles.required}>*</span>
+              <label htmlFor="email" className="label">
+                Email <span className={styles.required}>*</span>
               </label>
               <input
-                id="user_name"
-                name="user_name"
-                type="text"
-                autoComplete="username"
-                placeholder="Min. 3 characters"
-                value={form.user_name}
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                placeholder="Enter your email address"
+                value={form.email}
                 onChange={handleChange}
                 className="input"
                 disabled={loading}
@@ -178,42 +207,10 @@ export default function RegisterPage() {
                   tabIndex={-1}
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
-                  {showPassword ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
-                      <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
-                      <line x1="1" y1="1" x2="23" y2="23" />
-                    </svg>
-                  ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                      <circle cx="12" cy="12" r="3" />
-                    </svg>
-                  )}
+                  {showPassword ? <EyeOffIcon /> : <EyeIcon />}
                 </button>
               </div>
 
-              {/* Password rules — show when field is focused or has a value */}
               {(passwordFocused || form.password.length > 0) && (
                 <ul className={styles.rules}>
                   {PASSWORD_RULES.map((rule) => {
@@ -253,38 +250,7 @@ export default function RegisterPage() {
                   tabIndex={-1}
                   aria-label={showConfirmPassword ? "Hide password" : "Show password"}
                 >
-                  {showConfirmPassword ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
-                      <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
-                      <line x1="1" y1="1" x2="23" y2="23" />
-                    </svg>
-                  ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                      <circle cx="12" cy="12" r="3" />
-                    </svg>
-                  )}
+                  {showConfirmPassword ? <EyeOffIcon /> : <EyeIcon />}
                 </button>
               </div>
               {passwordMismatch && <span className={styles.mismatch}>⚠ Passwords do not match</span>}
