@@ -1,0 +1,90 @@
+/* ── Page ─────────────────────────────────────────────────────────────────── */
+.page {
+  width: 100%;
+}
+
+/* ── Back button ─────────────────────────────────────────────────────────── */
+.backBtn {
+  width: auto;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+/* ── Page heading ────────────────────────────────────────────────────────── */
+.pageTitle {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 4px;
+}
+.pageSub {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0 0 24px;
+}
+
+/* ── Section card ────────────────────────────────────────────────────────── */
+.section {
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.sectionTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+
+/* ── 2-col grid ──────────────────────────────────────────────────────────── */
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+/* ── Field ───────────────────────────────────────────────────────────────── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.req {
+  color: var(--red, #dc2626);
+  margin-left: 2px;
+}
+.errMsg {
+  font-size: 12px;
+  color: var(--red, #dc2626);
+}
+.hint {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ── Form actions (sticky bottom bar) ───────────────────────────────────── */
+.formActions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding: 16px 0 32px;
+}
+.actionBtn {
+  width: auto;
+  min-width: 140px;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .grid2 {
+    grid-template-columns: 1fr;
+  }
+  .formActions {
+    flex-direction: column-reverse;
+  }
+  .actionBtn {
+    width: 100%;
+  }
+}

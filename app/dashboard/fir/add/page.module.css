@@ -1,0 +1,342 @@
+/* ── Page — full width ────────────────────────────────────────────────────── */
+.page {
+  width: 100%;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.pageHeader {
+  margin-bottom: 20px;
+}
+.backBtn {
+  width: auto;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+.pageTitle {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+}
+.pageSub {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+.errorBanner {
+  margin-bottom: 20px;
+}
+
+/* ── Section card ─────────────────────────────────────────────────────────── */
+.section {
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.sectionTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 14px;
+}
+.hint {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+.req {
+  color: var(--red, #dc2626);
+  margin-left: 2px;
+}
+
+/* ── Mode selector ────────────────────────────────────────────────────────── */
+.modeGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.modeCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 18px 20px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius, 8px);
+  background: #fafafa;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    border-color 0.15s,
+    background 0.15s,
+    box-shadow 0.15s;
+}
+.modeCard:hover:not(.modeActive) {
+  border-color: #93c5fd;
+  background: #f8fbff;
+}
+.modeActive {
+  border-color: var(--primary, #3b82f6);
+  background: #eff6ff;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+.modeIcon {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+.modeLabel {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+.modeSub {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.modeCheck {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 20px;
+  height: 20px;
+  background: var(--primary, #3b82f6);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* ── Prisoner search ──────────────────────────────────────────────────────── */
+.searchWrap {
+  position: relative;
+}
+.searchInputRow {
+  position: relative;
+}
+.searchInput {
+  padding-right: 40px;
+  cursor: pointer;
+}
+.inlineSpinner {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+@keyframes spin {
+  to {
+    transform: translateY(-50%) rotate(360deg);
+  }
+}
+
+/* Dropdown */
+.dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 60;
+  background: var(--card-bg, #fff);
+  border: 1px solid var(--border);
+  border-radius: var(--radius, 8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  max-height: 280px;
+  overflow-y: auto;
+}
+.dropItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 11px 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.1s;
+}
+.dropItem:hover {
+  background: #f8f9fa;
+}
+.dropItem + .dropItem {
+  border-top: 1px solid var(--border);
+}
+
+.dropAvatar,
+.dropAvatarM,
+.dropAvatarF {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+}
+.dropAvatarM {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+.dropAvatarF {
+  background: linear-gradient(135deg, #ec4899, #be185d);
+}
+
+.dropInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+.dropName {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+.dropMeta {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dropEmpty {
+  padding: 20px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Status dots */
+.dotActive {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  flex-shrink: 0;
+}
+
+/* ── Selected prisoner card ───────────────────────────────────────────────── */
+.selectedCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 2px solid var(--primary, #3b82f6);
+  border-radius: var(--radius, 8px);
+  background: #eff6ff;
+}
+.selAvatar,
+.selAvatarM,
+.selAvatarF {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+.selAvatarM {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+.selAvatarF {
+  background: linear-gradient(135deg, #ec4899, #be185d);
+}
+
+.selInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+.selName {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+.selMeta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.removeBtn {
+  width: auto;
+  flex-shrink: 0;
+}
+
+/* ── Form grid ────────────────────────────────────────────────────────────── */
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.fullWidth {
+  grid-column: 1 / -1;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+}
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* ── Form actions ─────────────────────────────────────────────────────────── */
+.formActions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding-top: 4px;
+}
+.actionBtn {
+  width: auto;
+  min-width: 130px;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .modeGrid {
+    grid-template-columns: 1fr;
+  }
+  .grid2 {
+    grid-template-columns: 1fr;
+  }
+  .formActions {
+    flex-direction: column;
+  }
+  .actionBtn {
+    width: 100%;
+  }
+  .selectedCard {
+    flex-wrap: wrap;
+  }
+  .removeBtn {
+    width: 100%;
+  }
+}

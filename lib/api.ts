@@ -63,13 +63,9 @@ export const guardsApi = {
     axiosInstance.get("/api/guard", {
       params: query?.trim() ? { search: query.trim() } : {},
     }),
-
   getOne: (id: string) => axiosInstance.get(`/api/guard/${id}`),
-
   create: (data: Record<string, unknown>) => axiosInstance.post("/api/guard", data),
-
   update: (id: string, data: Record<string, unknown>) => axiosInstance.patch(`/api/guard/${id}`, data),
-
   deactivate: (id: string) => axiosInstance.post(`/api/guard/${id}/deactivate`),
 };
 
@@ -82,9 +78,13 @@ export const firApi = {
 
   getOne: (id: string) => axiosInstance.get(`/api/fir/${id}`),
 
+  // prisoner_id XOR accused_name — never both
   create: (data: Record<string, unknown>) => axiosInstance.post("/api/fir", data),
 
+  // admin only — all fields optional
+  // if prisoner_id supplied, accused_name auto-updates from prisoner
   update: (id: string, data: Record<string, unknown>) => axiosInstance.patch(`/api/fir/${id}`, data),
 
-  delete: (id: string) => axiosInstance.delete(`/api/fir/${id}`),
+  // admin and jailor
+  linkPrisoner: (id: string, prisoner_id: string) => axiosInstance.post(`/api/fir/${id}/link`, { prisoner_id }),
 };
