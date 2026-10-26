@@ -20,14 +20,13 @@ export const usersApi = {
       params: query?.trim() ? { query: query.trim() } : {},
     }),
 
-  // fixed: user_name → email
-  update: (id: string, data: { name?: string; email?: string; role?: string }) => axiosInstance.patch<UserResponse>(`/api/user/${id}`, data),
+  getOne: (id: string) => axiosInstance.get(`/api/user/${id}`),
+
+  update: (id: string, data: { name?: string; role?: string }) => axiosInstance.patch<UserResponse>(`/api/user/${id}`, data),
 
   block: (id: string) => axiosInstance.patch<UserResponse>(`/api/user/${id}/block`),
 
   unblock: (id: string) => axiosInstance.patch<UserResponse>(`/api/user/${id}/unblock`),
-
-  delete: (id: string) => axiosInstance.delete<{ message: string }>(`/api/user/${id}`),
 };
 
 // ─── Prisoners ─────────────────────────────────────────────────────────────────
