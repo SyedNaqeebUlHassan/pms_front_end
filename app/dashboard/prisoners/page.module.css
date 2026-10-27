@@ -62,10 +62,9 @@
   display: flex;
   gap: 10px;
   align-items: center;
-  flex-wrap: wrap;
 }
 .searchInput {
-  max-width: 340px;
+  width: 100%;
 }
 .searchBtn {
   width: auto;

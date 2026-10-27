@@ -200,6 +200,7 @@
   overflow-x: auto;
 }
 .table {
+  min-width: 640px;
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;

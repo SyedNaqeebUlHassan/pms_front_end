@@ -148,7 +148,7 @@
 /* ── Desktop table ───────────────────────────────────────────────────────── */
 .tableWrap {
   padding: 0;
-  overflow: hidden;
+  overflow: auto;
   margin-bottom: 0;
 }
 .table {

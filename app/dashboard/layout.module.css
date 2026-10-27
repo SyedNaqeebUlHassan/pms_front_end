@@ -1,15 +1,22 @@
-/* layout.css */
-
-/* ── Dashboard shell ─────────────────────────────────────────────────────── */
-
+/* ── Shell ───────────────────────────────────────────────────────────────── */
 .shell {
   display: flex;
   min-height: 100vh;
 }
 
+/* ── Mobile overlay ──────────────────────────────────────────────────────── */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+}
+
 /* ── Sidebar ─────────────────────────────────────────────────────────────── */
 .sidebar {
-  width: var(--sidebar-w);
+  width: var(--sidebar-w, 220px);
   flex-shrink: 0;
   background: var(--navy-900);
   display: flex;
@@ -19,26 +26,33 @@
   left: 0;
   height: 100vh;
   z-index: 100;
+  transition: transform 0.25s ease;
 }
 
+/* ── Brand ───────────────────────────────────────────────────────────────── */
 .brand {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 20px 20px 16px;
+  gap: 10px;
+  padding: 18px 16px 14px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .brandIcon {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   background: var(--blue);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-sm, 6px);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  color: #fff;
   flex-shrink: 0;
+}
+
+.brandText {
+  flex: 1;
+  min-width: 0;
 }
 
 .brandName {
@@ -54,10 +68,32 @@
   margin-top: 1px;
 }
 
-/* Nav */
+/* Close button — only shown on mobile */
+.sidebarClose {
+  display: none;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  line-height: 0;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+.sidebarClose:hover {
+  color: #fff;
+}
+
+/* ── Nav ─────────────────────────────────────────────────────────────────── */
 .nav {
   flex: 1;
-  padding: 20px 12px 12px;
+  padding: 18px 10px 10px;
+  overflow-y: auto;
+}
+
+.navGroup {
+  margin-bottom: 20px;
 }
 
 .navSection {
@@ -67,19 +103,15 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   padding: 0 10px;
-  margin-bottom: 8px;
-}
-
-.navGroup {
-  margin-bottom: 20px;
+  margin-bottom: 6px;
 }
 
 .navLink {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 10px;
-  border-radius: var(--radius-sm);
+  padding: 9px 10px;
+  border-radius: var(--radius-sm, 6px);
   font-size: 13px;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.55);
@@ -101,12 +133,12 @@
 }
 
 .navIcon {
-  font-size: 15px;
+  flex-shrink: 0;
 }
 
-/* User footer */
+/* ── User footer ─────────────────────────────────────────────────────────── */
 .userFooter {
-  padding: 12px;
+  padding: 10px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -119,8 +151,8 @@
 }
 
 .avatar {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background: var(--blue);
   display: flex;
@@ -130,6 +162,10 @@
   font-size: 12px;
   font-weight: 700;
   flex-shrink: 0;
+}
+
+.userMeta {
+  min-width: 0;
 }
 
 .userName {
@@ -144,20 +180,29 @@
 .userRole {
   display: inline-block;
   font-size: 10px;
-  background: rgba(124, 58, 237, 0.3);
-  color: #c4b5fd;
   padding: 1px 7px;
   border-radius: 999px;
   margin-top: 2px;
 }
 
+.roleAdmin {
+  background: rgba(124, 58, 237, 0.3);
+  color: #c4b5fd;
+}
+.roleJailor {
+  background: rgba(0, 112, 243, 0.25);
+  color: #93c5fd;
+}
+
 .logoutBtn {
   width: 100%;
-  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   padding: 9px 10px;
   background: transparent;
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-sm, 6px);
   font-size: 13px;
   color: rgba(255, 255, 255, 0.4);
   cursor: pointer;
@@ -169,31 +214,54 @@
   color: rgba(255, 255, 255, 0.85);
 }
 
-/* ── Main content area ───────────────────────────────────────────────────── */
+/* ── Main area ───────────────────────────────────────────────────────────── */
 .main {
   flex: 1;
-  margin-left: var(--sidebar-w);
+  min-width: 0;
+  margin-left: var(--sidebar-w, 220px);
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
+/* ── Topbar ──────────────────────────────────────────────────────────────── */
 .topbar {
-  height: var(--topbar-h);
+  height: var(--topbar-h, 56px);
   background: var(--card);
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
-  padding: 0 24px;
+  gap: 10px;
+  padding: 0 20px;
   position: sticky;
   top: 0;
   z-index: 10;
+}
+
+/* Hamburger — hidden on desktop, shown on mobile */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  line-height: 0;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+.hamburger:hover {
+  color: var(--text);
 }
 
 .topbarTitle {
   font-size: 14px;
   font-weight: 600;
   color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .topbarRight {
@@ -201,23 +269,42 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 12px;
-  color: var(--text-muted);
+  flex-shrink: 0;
 }
 
-.topbarUser {
+.topbarEmail {
+  font-size: 12px;
   font-weight: 600;
   color: var(--text);
   font-family: monospace;
 }
 
+.topbarBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.badgeAdmin {
+  background: rgba(124, 58, 237, 0.12);
+  color: var(--purple, #7c3aed);
+}
+.badgeJailor {
+  background: var(--blue-light, #eff6ff);
+  color: var(--blue, #2563eb);
+}
+
+/* ── Content ─────────────────────────────────────────────────────────────── */
 .content {
   flex: 1;
   padding: 24px;
   background: var(--bg);
 }
 
-/* ── Loading spinner screen ──────────────────────────────────────────────── */
+/* ── Loading screen ──────────────────────────────────────────────────────── */
 .loadingScreen {
   min-height: 100vh;
   display: flex;
@@ -233,31 +320,54 @@
   color: var(--text-muted);
 }
 
-/* ── Role badge variants ──────────────────────────────────────────────────── */
-.roleAdmin {
-  background: rgba(124, 58, 237, 0.3);
-  color: #c4b5fd;
-}
-.roleJailor {
-  background: rgba(0, 112, 243, 0.25);
-  color: #93c5fd;
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Sidebar becomes a drawer */
+  .sidebar {
+    transform: translateX(-100%);
+    width: 260px;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .sidebarOpen {
+    transform: translateX(0);
+  }
+
+  /* Show close button inside sidebar */
+  .sidebarClose {
+    display: flex;
+  }
+
+  /* Show overlay when sidebar is open */
+  .overlay {
+    display: block;
+  }
+
+  /* Main takes full width */
+  .main {
+    margin-left: 0;
+  }
+
+  /* Show hamburger */
+  .hamburger {
+    display: flex;
+  }
+
+  /* Hide email on small screens */
+  .topbarEmail {
+    display: none;
+  }
+
+  .content {
+    padding: 16px;
+  }
 }
 
-.topbarBadge {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px 8px;
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 700;
-  margin-left: 6px;
-}
-
-.badgeAdmin {
-  background: rgba(124, 58, 237, 0.15);
-  color: var(--purple);
-}
-.badgeJailor {
-  background: var(--blue-light);
-  color: var(--blue);
+@media (max-width: 480px) {
+  .topbarTitle {
+    font-size: 13px;
+  }
+  .content {
+    padding: 12px;
+  }
 }
