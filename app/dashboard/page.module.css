@@ -1,139 +1,401 @@
-/* ── Page header ─────────────────────────────────────────────────────────────── */
+/* ── Page ─────────────────────────────────────────────────────────────────── */
+.page {
+  width: 100%;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
 .pageHeader {
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 .pageTitle {
   font-size: 20px;
   font-weight: 800;
   color: var(--text);
+  margin: 0 0 3px;
 }
 .pageSub {
   font-size: 13px;
   color: var(--text-muted);
-  margin-top: 3px;
+  margin: 0;
 }
 
-/* ── Admin overview grid ─────────────────────────────────────────────────────── */
-.overviewGrid {
+/* ── Stats grid ──────────────────────────────────────────────────────────── */
+.statsGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
+  margin-bottom: 24px;
 }
 
-.overviewCard {
-  padding: 24px 20px;
+/* Jailor sees 3 cards — centre them */
+.statsGridJailor {
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 720px;
+}
+
+.statCard {
+  padding: 20px;
   cursor: pointer;
   text-align: left;
   border: none;
   width: 100%;
+  border-top: 3px solid transparent;
   transition:
     transform 0.12s,
     box-shadow 0.12s;
-  border-top: 3px solid transparent;
 }
-.overviewCard:hover {
+.statCard:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
 }
 
+/* accent colours */
 .cardBlue {
-  border-top-color: var(--blue);
+  border-top-color: var(--blue, #2563eb);
 }
 .cardRed {
-  border-top-color: var(--red);
+  border-top-color: var(--red, #dc2626);
 }
 .cardGreen {
-  border-top-color: var(--green);
+  border-top-color: var(--green, #16a34a);
 }
 .cardPurple {
-  border-top-color: var(--purple);
+  border-top-color: var(--purple, #7c3aed);
 }
 
-.overviewIcon {
-  font-size: 28px;
-  margin-bottom: 12px;
+.statCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
-.overviewLabel {
+
+.statLabel {
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--text-muted);
 }
-.overviewValue {
-  font-size: 36px;
+
+.statIconWrap {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cardBlueIcon {
+  background: #dbeafe;
+  color: var(--blue, #2563eb);
+}
+.cardRedIcon {
+  background: #fee2e2;
+  color: var(--red, #dc2626);
+}
+.cardGreenIcon {
+  background: #dcfce7;
+  color: var(--green, #16a34a);
+}
+.cardPurpleIcon {
+  background: #ede9fe;
+  color: var(--purple, #7c3aed);
+}
+
+.statValue {
+  font-size: 34px;
   font-weight: 800;
   color: var(--text);
-  margin-top: 4px;
+  line-height: 1;
+  margin-bottom: 10px;
 }
-.overviewSkeleton {
-  height: 40px;
-  width: 60px;
-  margin-top: 4px;
+.statSkeleton {
+  height: 36px;
+  width: 56px;
   border-radius: 4px;
+  margin-bottom: 10px;
 }
-.overviewLink {
+
+.statLink {
+  display: flex;
+  align-items: center;
+  gap: 3px;
   font-size: 12px;
-  color: var(--blue);
-  margin-top: 12px;
   font-weight: 600;
+  color: var(--blue);
 }
 
-/* ── Jailor shortcut grid ────────────────────────────────────────────────────── */
-.jailorGrid {
+/* ── Bottom two-col grid ─────────────────────────────────────────────────── */
+.bottomGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  max-width: 700px;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
 }
 
-.jailorCard {
-  padding: 28px 24px;
-  cursor: pointer;
-  text-align: left;
-  border: none;
-  width: 100%;
-  transition:
-    transform 0.12s,
-    box-shadow 0.12s;
-}
-.jailorCard:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+/* ── Panel card ──────────────────────────────────────────────────────────── */
+.panel {
+  overflow: hidden;
 }
 
-.jailorIcon {
-  font-size: 32px;
-  margin-bottom: 14px;
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
 }
-.jailorCardLabel {
-  font-size: 15px;
+.panelTitle {
+  font-size: 14px;
   font-weight: 700;
   color: var(--text);
-  margin-bottom: 6px;
+  margin: 0;
 }
-.jailorCardDesc {
+.panelLink {
+  display: flex;
+  align-items: center;
+  gap: 3px;
   font-size: 12px;
-  color: var(--text-muted);
-  line-height: 1.5;
-}
-.jailorCardLink {
-  font-size: 12px;
-  color: var(--blue);
-  margin-top: 14px;
   font-weight: 600;
+  color: var(--blue);
+  text-decoration: none;
+}
+.panelLink:hover {
+  text-decoration: underline;
+}
+
+/* ── Skeleton rows ───────────────────────────────────────────────────────── */
+.skeletonList {
+  padding: 12px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.skeletonRow {
+  height: 44px;
+  border-radius: 8px;
+}
+
+/* ── Empty state ─────────────────────────────────────────────────────────── */
+.empty {
+  padding: 40px 20px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ── Recent Prisoners list ───────────────────────────────────────────────── */
+.prisonerList {
+}
+
+.prisonerRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  border-bottom: 1px solid #f3f4f6;
+  transition: background 0.1s;
+}
+.prisonerRow:last-child {
+  border-bottom: none;
+}
+.prisonerRow:hover {
+  background: #fafafa;
+}
+
+.prisonerAvatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #fee2e2;
+  color: var(--red, #dc2626);
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.prisonerInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.prisonerName {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.prisonerNum {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: monospace;
+}
+
+.prisonerMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+/* Status badges */
+.badgeActive {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #dcfce7;
+  color: #15803d;
+  text-transform: capitalize;
+}
+.badgeReleased {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #dbeafe;
+  color: #1d4ed8;
+  text-transform: capitalize;
+}
+.badgeOther {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #f3f4f6;
+  color: var(--text-muted);
+  text-transform: capitalize;
+}
+
+.prisonerDate {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ── Activity feed ───────────────────────────────────────────────────────── */
+.activityList {
+}
+
+.activityRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 20px;
+  border-bottom: 1px solid #f3f4f6;
+}
+.activityRow:last-child {
+  border-bottom: none;
+}
+
+.activityIconWrap {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* action colours */
+.actGreen {
+  background: #dcfce7;
+  color: #15803d;
+}
+.actBlue {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+.actPurple {
+  background: #ede9fe;
+  color: #5b21b6;
+}
+
+.activityBody {
+  flex: 1;
+  min-width: 0;
+}
+.activityDesc {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.5;
+  margin: 0 0 5px;
+}
+
+.activityMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.entityBadge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 999px;
+  text-transform: capitalize;
+}
+.entRed {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+.entBlue {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+.entPurple {
+  background: #ede9fe;
+  color: #5b21b6;
+}
+
+.activityTime {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .statsGridJailor {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 900px) {
-  .overviewGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 640px) {
-  .overviewGrid {
+  .bottomGrid {
     grid-template-columns: 1fr;
   }
-  .jailorGrid {
+}
+
+@media (max-width: 640px) {
+  .statsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .statsGridJailor {
+    grid-template-columns: 1fr 1fr;
+  }
+  .statValue {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 400px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+  .statsGridJailor {
     grid-template-columns: 1fr;
   }
 }

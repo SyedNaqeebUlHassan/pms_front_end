@@ -87,3 +87,7 @@ export const firApi = {
   // admin and jailor
   linkPrisoner: (id: string, prisoner_id: string) => axiosInstance.post(`/api/fir/${id}/link`, { prisoner_id }),
 };
+
+export const activityApi = {
+  getAll: (params?: { limit?: number; page?: number }) => axiosInstance.get("/api/activity-logs", { params }),
+};
