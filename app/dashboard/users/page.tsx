@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast from "react-hot-toast";
+import { MdPeople, MdAdminPanelSettings, MdBadge, MdCheckCircle, MdBlock } from "react-icons/md";
 import { usersApi } from "@/lib/api";
 import { User } from "@/types/user";
 import styles from "./page.module.css";
@@ -47,31 +48,34 @@ export default function UsersPage() {
   const [loading, setLoading] = useState(true);
   const [fetchError, setFetchError] = useState("");
 
-  // Search (client-side)
-  const [search, setSearch] = useState("");
+  // Search
+  const [query, setQuery] = useState("");
   const [activeQuery, setActiveQuery] = useState("");
-  const searchRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Block modal
   const [confirmUser, setConfirmUser] = useState<User | null>(null);
   const [blockingId, setBlockingId] = useState<string | null>(null);
 
-  // ── Fetch ──────────────────────────────────────────────────────────────────
-  const fetchUsers = (search?: string) => {
+  // ── Fetch (server-side search) ─────────────────────────────────────────────
+  const fetchUsers = async (search?: string) => {
     setLoading(true);
     setFetchError("");
-    usersApi
-      .getAll(search)
-      .then((res) => setUsers(res.data.users ?? res.data))
-      .catch(() => setFetchError("Failed to load users."))
-      .finally(() => setLoading(false));
+    try {
+      const res = await usersApi.getAll(search);
+      setUsers(res.data.users ?? res.data);
+    } catch {
+      setFetchError("Failed to load users.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     fetchUsers();
   }, []);
 
-  // ── Stats ──────────────────────────────────────────────────────────────────
+  // ── Stats (computed from loaded results) ───────────────────────────────────
   const stats = useMemo(
     () => ({
       total: users.length,
@@ -82,24 +86,23 @@ export default function UsersPage() {
     }),
     [users],
   );
-  // ── Search ─────────────────────────────────────────────────────────────────
-  const submitSearch = (e: React.FormEvent) => {
+
+  // ── Search handlers ────────────────────────────────────────────────────────
+  const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    const q = search.trim() || undefined;
-    setActiveQuery(search.trim());
+    const q = query.trim() || undefined;
+    setActiveQuery(query.trim());
     fetchUsers(q);
   };
-  const clearSearch = () => {
-    setSearch("");
+
+  const handleClear = () => {
+    setQuery("");
     setActiveQuery("");
     fetchUsers();
-    searchRef.current?.focus();
-  };
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") submitSearch(e);
+    inputRef.current?.focus();
   };
 
-  // ── Block / Unblock ────────────────────────────────────────────────────────
+  // ── Block ──────────────────────────────────────────────────────────────────
   const handleBlock = async () => {
     if (!confirmUser) return;
     setBlockingId(confirmUser.id);
@@ -115,6 +118,7 @@ export default function UsersPage() {
     }
   };
 
+  // ── Unblock ────────────────────────────────────────────────────────────────
   const handleUnblock = async (u: User) => {
     setBlockingId(u.id);
     try {
@@ -165,66 +169,62 @@ export default function UsersPage() {
 
       {/* ── Stats ── */}
       <div className={styles.statsGrid}>
-        <div className={`card ${styles.statCard}`}>
-          <span className={styles.statLabel}>Total Users</span>
-          <span className={styles.statValue}>{stats.total}</span>
-        </div>
-        <div className={`card ${styles.statCard}`}>
-          <span className={styles.statLabel}>Admins</span>
-          <span className={`${styles.statValue} ${styles.valBlue}`}>{stats.admins}</span>
-        </div>
-        <div className={`card ${styles.statCard}`}>
-          <span className={styles.statLabel}>Jailors</span>
-          <span className={`${styles.statValue} ${styles.valPurple}`}>{stats.jailors}</span>
-        </div>
-        <div className={`card ${styles.statCard}`}>
-          <span className={styles.statLabel}>Active</span>
-          <span className={`${styles.statValue} ${styles.valGreen}`}>{stats.active}</span>
-        </div>
-        <div className={`card ${styles.statCard}`}>
-          <span className={styles.statLabel}>Blocked</span>
-          <span className={`${styles.statValue} ${styles.valRed}`}>{stats.blocked}</span>
-        </div>
+        {(
+          [
+            { label: "Total Users", value: stats.total, icon: MdPeople, accent: styles.cardGray, iconCls: styles.iconGray },
+            { label: "Admins", value: stats.admins, icon: MdAdminPanelSettings, accent: styles.cardBlue, iconCls: styles.iconBlue },
+            { label: "Jailors", value: stats.jailors, icon: MdBadge, accent: styles.cardPurple, iconCls: styles.iconPurple },
+            { label: "Active", value: stats.active, icon: MdCheckCircle, accent: styles.cardGreen, iconCls: styles.iconGreen },
+            { label: "Blocked", value: stats.blocked, icon: MdBlock, accent: styles.cardRed, iconCls: styles.iconRed },
+          ] as const
+        ).map(({ label, value, icon: Icon, accent, iconCls }) => (
+          <div key={label} className={`card ${styles.statCard} ${accent}`}>
+            <div className={styles.statCardTop}>
+              <span className={styles.statLabel}>{label}</span>
+              <div className={`${styles.statIconWrap} ${iconCls}`}>
+                <Icon size={17} />
+              </div>
+            </div>
+            <div className={styles.statValue}>{value}</div>
+          </div>
+        ))}
       </div>
 
-      {/* ── Toolbar ── */}
-      <div className={`card ${styles.toolbar}`}>
-        <div className={styles.searchRow}>
+      {/* ── Search ── */}
+      <div className={`card ${styles.searchBar}`}>
+        <form className={styles.searchForm} onSubmit={handleSearch}>
           <input
-            ref={searchRef}
+            ref={inputRef}
             type="text"
             className={`input ${styles.searchInput}`}
             placeholder="Search by name or email…"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            onKeyDown={handleKeyDown}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
           />
-          <button className={`btn btn-primary ${styles.searchBtn}`} onClick={submitSearch}>
+          <button type="submit" className={`btn btn-primary ${styles.searchBtn}`} disabled={loading}>
             Search
           </button>
           {activeQuery && (
-            <button className={`btn btn-secondary ${styles.clearBtn}`} onClick={clearSearch}>
+            <button type="button" className="btn btn-secondary" onClick={handleClear}>
               Clear
             </button>
           )}
-        </div>
+        </form>
       </div>
 
       {/* ── Desktop Table ── */}
       <div className={`card ${styles.tableWrap}`}>
-        {users.length === 0 ? (
-          <div className={styles.empty}>{activeQuery ? `No users matching "${activeQuery}".` : "No users found."}</div>
-        ) : (
+        <div className={styles.tableScroll}>
           <table className={styles.table}>
             <thead>
               <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Status</th>
-                <th>Joined</th>
-                <th>Actions</th>
+                <th className={styles.th}>#</th>
+                <th className={styles.th}>Name</th>
+                <th className={styles.th}>Email</th>
+                <th className={styles.th}>Role</th>
+                <th className={styles.th}>Status</th>
+                <th className={styles.th}>Joined</th>
+                <th className={styles.th}>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -280,6 +280,12 @@ export default function UsersPage() {
               )}
             </tbody>
           </table>
+        </div>
+        {users.length > 0 && (
+          <div className={styles.tableFooter}>
+            Showing {users.length} user{users.length !== 1 ? "s" : ""}
+            {activeQuery && ` for "${activeQuery}"`}
+          </div>
         )}
       </div>
 

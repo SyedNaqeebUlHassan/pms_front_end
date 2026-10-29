@@ -25,7 +25,27 @@
 }
 .statCard {
   padding: 20px;
+  border-top: 3px solid transparent;
 }
+
+/* accent colours */
+.cardBlue {
+  border-top-color: var(--blue, #2563eb);
+}
+.cardGreen {
+  border-top-color: var(--green, #16a34a);
+}
+.cardRed {
+  border-top-color: var(--red, #dc2626);
+}
+
+.statCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
 .statLabel {
   font-size: 11px;
   font-weight: 700;
@@ -33,24 +53,41 @@
   letter-spacing: 0.06em;
   color: var(--text-muted);
 }
+
+.statIconWrap {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* icon background + colour */
+.iconBlue {
+  background: #dbeafe;
+  color: var(--blue, #2563eb);
+}
+.iconGreen {
+  background: #dcfce7;
+  color: var(--green, #16a34a);
+}
+.iconRed {
+  background: #fee2e2;
+  color: var(--red, #dc2626);
+}
+
 .statValue {
-  font-size: 32px;
+  font-size: 34px;
   font-weight: 800;
-  margin-top: 6px;
-}
-.statBlue {
-  color: var(--blue);
-}
-.statGreen {
-  color: var(--green);
-}
-.statRed {
-  color: var(--red);
+  color: var(--text);
+  line-height: 1;
 }
 .statSkeleton {
   height: 38px;
   width: 60px;
-  margin-top: 6px;
+  border-radius: 4px;
 }
 
 /* ── Search ───────────────────────────────────────────────────────────────── */

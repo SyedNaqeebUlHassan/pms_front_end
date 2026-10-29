@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { MdAssignment, MdHowToReg, MdGavel, MdCheckCircle, MdArchive } from "react-icons/md";
 import { firApi } from "@/lib/api";
 import styles from "./page.module.css";
 import { useAuthStore } from "@/store/auth.store";
@@ -105,26 +106,25 @@ export default function FIRListPage() {
 
       {/* ── Stats ── */}
       <div className={styles.statsGrid}>
-        <div className={styles.statCard}>
-          <span className={styles.statNum}>{stats.total}</span>
-          <span className={styles.statLabel}>Total FIRs</span>
-        </div>
-        <div className={`${styles.statCard} ${styles.statBlue}`}>
-          <span className={styles.statNum}>{stats.registered}</span>
-          <span className={styles.statLabel}>Registered</span>
-        </div>
-        <div className={`${styles.statCard} ${styles.statRed}`}>
-          <span className={styles.statNum}>{stats.convicted}</span>
-          <span className={styles.statLabel}>Convicted</span>
-        </div>
-        <div className={`${styles.statCard} ${styles.statGreen}`}>
-          <span className={styles.statNum}>{stats.acquitted}</span>
-          <span className={styles.statLabel}>Acquitted</span>
-        </div>
-        <div className={`${styles.statCard} ${styles.statGray}`}>
-          <span className={styles.statNum}>{stats.closed}</span>
-          <span className={styles.statLabel}>Closed / Cancelled</span>
-        </div>
+        {(
+          [
+            { label: "Total FIRs", value: stats.total, icon: MdAssignment, accent: styles.cardGray, iconCls: styles.iconGray },
+            { label: "Registered", value: stats.registered, icon: MdHowToReg, accent: styles.cardBlue, iconCls: styles.iconBlue },
+            { label: "Convicted", value: stats.convicted, icon: MdGavel, accent: styles.cardRed, iconCls: styles.iconRed },
+            { label: "Acquitted", value: stats.acquitted, icon: MdCheckCircle, accent: styles.cardGreen, iconCls: styles.iconGreen },
+            { label: "Closed / Cancelled", value: stats.closed, icon: MdArchive, accent: styles.cardSlate, iconCls: styles.iconSlate },
+          ] as const
+        ).map(({ label, value, icon: Icon, accent, iconCls }) => (
+          <div key={label} className={`card ${styles.statCard} ${accent}`}>
+            <div className={styles.statCardTop}>
+              <span className={styles.statLabel}>{label}</span>
+              <div className={`${styles.statIconWrap} ${iconCls}`}>
+                <Icon size={17} />
+              </div>
+            </div>
+            <div className={styles.statValue}>{value}</div>
+          </div>
+        ))}
       </div>
 
       {/* ── Search ── */}

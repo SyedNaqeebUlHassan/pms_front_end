@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import toast from "react-hot-toast";
+import { MdSecurity, MdCheckCircle, MdBlock, MdMan, MdWoman } from "react-icons/md";
 import { guardsApi } from "@/lib/api";
 import { Guard } from "@/types/guard";
 import styles from "./page.module.css";
@@ -116,26 +117,25 @@ export default function GuardsListPage() {
 
       {/* ── Stats grid ── */}
       <div className={styles.statsGrid}>
-        <div className={`card ${styles.statCard}`}>
-          <span className={styles.statNum}>{total}</span>
-          <span className={styles.statLabel}>Total Guards</span>
-        </div>
-        <div className={`card ${styles.statCard}`}>
-          <span className={`${styles.statNum} ${styles.numGreen}`}>{active}</span>
-          <span className={styles.statLabel}>Active</span>
-        </div>
-        <div className={`card ${styles.statCard}`}>
-          <span className={`${styles.statNum} ${styles.numGray}`}>{inactive}</span>
-          <span className={styles.statLabel}>Inactive</span>
-        </div>
-        <div className={`card ${styles.statCard}`}>
-          <span className={`${styles.statNum} ${styles.numBlue}`}>{maleCount}</span>
-          <span className={styles.statLabel}>Male</span>
-        </div>
-        <div className={`card ${styles.statCard}`}>
-          <span className={`${styles.statNum} ${styles.numPink}`}>{femaleCount}</span>
-          <span className={styles.statLabel}>Female</span>
-        </div>
+        {(
+          [
+            { label: "Total Guards", value: total, icon: MdSecurity, accent: styles.cardGray, iconCls: styles.iconGray },
+            { label: "Active", value: active, icon: MdCheckCircle, accent: styles.cardGreen, iconCls: styles.iconGreen },
+            { label: "Inactive", value: inactive, icon: MdBlock, accent: styles.cardSlate, iconCls: styles.iconSlate },
+            { label: "Male", value: maleCount, icon: MdMan, accent: styles.cardBlue, iconCls: styles.iconBlue },
+            { label: "Female", value: femaleCount, icon: MdWoman, accent: styles.cardPink, iconCls: styles.iconPink },
+          ] as const
+        ).map(({ label, value, icon: Icon, accent, iconCls }) => (
+          <div key={label} className={`card ${styles.statCard} ${accent}`}>
+            <div className={styles.statCardTop}>
+              <span className={styles.statLabel}>{label}</span>
+              <div className={`${styles.statIconWrap} ${iconCls}`}>
+                <Icon size={17} />
+              </div>
+            </div>
+            <div className={styles.statValue}>{value}</div>
+          </div>
+        ))}
       </div>
 
       {/* ── Search bar ── */}

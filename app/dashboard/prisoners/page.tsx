@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { MdLock, MdLockOpen, MdCheckCircle } from "react-icons/md";
 import { prisonersApi } from "@/lib/api";
 import { useAuthStore } from "@/store/auth.store";
 import { Prisoner } from "@/types/prisoner";
@@ -123,18 +124,23 @@ export default function PrisonersPage() {
 
       {/* Stats */}
       <div className={styles.stats}>
-        <div className={`card ${styles.statCard}`}>
-          <div className={styles.statLabel}>Total Prisoners</div>
-          {loading ? <div className={`skeleton ${styles.statSkeleton}`} /> : <div className={`${styles.statValue} ${styles.statBlue}`}>{total}</div>}
-        </div>
-        <div className={`card ${styles.statCard}`}>
-          <div className={styles.statLabel}>Currently Held</div>
-          {loading ? <div className={`skeleton ${styles.statSkeleton}`} /> : <div className={`${styles.statValue} ${styles.statGreen}`}>{active}</div>}
-        </div>
-        <div className={`card ${styles.statCard}`}>
-          <div className={styles.statLabel}>Released</div>
-          {loading ? <div className={`skeleton ${styles.statSkeleton}`} /> : <div className={`${styles.statValue} ${styles.statRed}`}>{released}</div>}
-        </div>
+        {(
+          [
+            { label: "Total Prisoners", value: total, icon: MdLock, accent: styles.cardBlue, iconCls: styles.iconBlue },
+            { label: "Currently Held", value: active, icon: MdCheckCircle, accent: styles.cardGreen, iconCls: styles.iconGreen },
+            { label: "Released", value: released, icon: MdLockOpen, accent: styles.cardRed, iconCls: styles.iconRed },
+          ] as const
+        ).map(({ label, value, icon: Icon, accent, iconCls }) => (
+          <div key={label} className={`card ${styles.statCard} ${accent}`}>
+            <div className={styles.statCardTop}>
+              <span className={styles.statLabel}>{label}</span>
+              <div className={`${styles.statIconWrap} ${iconCls}`}>
+                <Icon size={17} />
+              </div>
+            </div>
+            {loading ? <div className={`skeleton ${styles.statSkeleton}`} /> : <div className={styles.statValue}>{value}</div>}
+          </div>
+        ))}
       </div>
 
       {/* Search */}
@@ -235,7 +241,6 @@ export default function PrisonersPage() {
                             Edit
                           </button>
                         )}
-
                         {isAdmin && p.is_active && (
                           <button className="btn btn-warning btn-sm" onClick={() => setReleaseTarget(p)}>
                             Release

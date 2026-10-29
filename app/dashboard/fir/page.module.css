@@ -36,38 +36,79 @@
   margin-bottom: 20px;
 }
 .statCard {
-  background: var(--card-bg, #fff);
-  border: 1px solid var(--border);
-  border-radius: var(--radius, 8px);
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  border-top: 3px solid var(--border);
+  padding: 20px;
+  border-top: 3px solid transparent;
 }
-.statBlue {
-  border-top-color: #3b82f6;
+
+/* accent colours */
+.cardGray {
+  border-top-color: #6b7280;
 }
-.statRed {
-  border-top-color: #ef4444;
+.cardBlue {
+  border-top-color: var(--blue, #2563eb);
 }
-.statGreen {
-  border-top-color: #22c55e;
+.cardRed {
+  border-top-color: var(--red, #dc2626);
 }
-.statGray {
+.cardGreen {
+  border-top-color: var(--green, #16a34a);
+}
+.cardSlate {
   border-top-color: #94a3b8;
 }
 
-.statNum {
-  font-size: 26px;
+.statCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.statLabel {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statIconWrap {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* icon background + colour */
+.iconGray {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+.iconBlue {
+  background: #dbeafe;
+  color: var(--blue, #2563eb);
+}
+.iconRed {
+  background: #fee2e2;
+  color: var(--red, #dc2626);
+}
+.iconGreen {
+  background: #dcfce7;
+  color: var(--green, #16a34a);
+}
+.iconSlate {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.statValue {
+  font-size: 34px;
   font-weight: 800;
   color: var(--text);
   line-height: 1;
-}
-.statLabel {
-  font-size: 12px;
-  color: var(--text-muted);
-  font-weight: 500;
 }
 
 /* ── Search card ──────────────────────────────────────────────────────────── */
