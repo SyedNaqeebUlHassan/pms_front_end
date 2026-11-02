@@ -66,6 +66,7 @@ export const guardsApi = {
   create: (data: Record<string, unknown>) => axiosInstance.post("/api/guard", data),
   update: (id: string, data: Record<string, unknown>) => axiosInstance.patch(`/api/guard/${id}`, data),
   deactivate: (id: string) => axiosInstance.post(`/api/guard/${id}/deactivate`),
+  activate: (id: string) => axiosInstance.post(`/api/guard/${id}/activate`),
 };
 
 // ─── FIR ───────────────────────────────────────────────────────────────────────

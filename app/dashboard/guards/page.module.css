@@ -404,7 +404,7 @@
   padding: 16px 0 4px;
 }
 
-/* ── Deactivate modal ────────────────────────────────────────────────────── */
+/* ── Modal (shared) ──────────────────────────────────────────────────────── */
 .overlay {
   position: fixed;
   inset: 0;
@@ -468,6 +468,8 @@
   font-size: 13px;
   color: var(--text-muted);
 }
+
+/* red info box — deactivate modal */
 .modalWarning {
   background: #fee2e2;
   color: #b91c1c;
@@ -478,6 +480,19 @@
   line-height: 1.5;
   margin-bottom: 24px;
 }
+
+/* green info box — activate modal */
+.modalSuccess {
+  background: #dcfce7;
+  color: #15803d;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
 .modalActions {
   display: flex;
   gap: 10px;

@@ -39,9 +39,11 @@ export default function GuardsListPage() {
   const [search, setSearch] = useState("");
   const [activeQuery, setActiveQuery] = useState("");
   const [deactivatingId, setDeactivatingId] = useState<string | null>(null);
+  const [activatingId, setActivatingId] = useState<string | null>(null);
   const [confirmGuard, setConfirmGuard] = useState<Guard | null>(null);
+  const [confirmActivateGuard, setConfirmActivateGuard] = useState<Guard | null>(null);
   const searchRef = useRef<HTMLInputElement>(null);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null); // kept for future debounce use
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // ── Fetch ──────────────────────────────────────────────────────────────────
   const fetchGuards = (q = "") => {
@@ -92,6 +94,22 @@ export default function GuardsListPage() {
       toast.error("Failed to deactivate guard.");
     } finally {
       setDeactivatingId(null);
+    }
+  };
+
+  // ── Activate ───────────────────────────────────────────────────────────────
+  const handleActivate = async () => {
+    if (!confirmActivateGuard) return;
+    setActivatingId(confirmActivateGuard.id);
+    try {
+      await guardsApi.activate(confirmActivateGuard.id);
+      setGuards((prev) => prev.map((g) => (g.id === confirmActivateGuard.id ? { ...g, is_active: true } : g)));
+      toast.success(`${confirmActivateGuard.name} has been activated.`);
+      setConfirmActivateGuard(null);
+    } catch {
+      toast.error("Failed to activate guard.");
+    } finally {
+      setActivatingId(null);
     }
   };
 
@@ -229,15 +247,21 @@ export default function GuardsListPage() {
                   </td>
                   <td>
                     <div className={styles.actions}>
-                      <Link href={`/dashboard/guards/${g.id}`} className="btn btn-secondary btn-sm">
-                        View
-                      </Link>
-                      <Link href={`/dashboard/guards/${g.id}/edit`} className="btn btn-secondary btn-sm">
-                        Edit
-                      </Link>
-                      {g.is_active && (
-                        <button className="btn btn-danger btn-sm" onClick={() => setConfirmGuard(g)} disabled={deactivatingId === g.id}>
-                          {deactivatingId === g.id ? "…" : "Deactivate"}
+                      {g.is_active ? (
+                        <>
+                          <Link href={`/dashboard/guards/${g.id}`} className="btn btn-secondary btn-sm">
+                            View
+                          </Link>
+                          <Link href={`/dashboard/guards/${g.id}/edit`} className="btn btn-secondary btn-sm">
+                            Edit
+                          </Link>
+                          <button className="btn btn-danger btn-sm" onClick={() => setConfirmGuard(g)} disabled={deactivatingId === g.id}>
+                            {deactivatingId === g.id ? "…" : "Deactivate"}
+                          </button>
+                        </>
+                      ) : (
+                        <button className="btn btn-success btn-sm" onClick={() => setConfirmActivateGuard(g)} disabled={activatingId === g.id}>
+                          {activatingId === g.id ? "…" : "Activate"}
                         </button>
                       )}
                     </div>
@@ -278,15 +302,21 @@ export default function GuardsListPage() {
 
               {/* Actions */}
               <div className={styles.mobileActions}>
-                <Link href={`/dashboard/guards/${g.id}`} className={`btn btn-secondary btn-sm ${styles.mobileBtn}`}>
-                  View
-                </Link>
-                <Link href={`/dashboard/guards/${g.id}/edit`} className={`btn btn-secondary btn-sm ${styles.mobileBtn}`}>
-                  Edit
-                </Link>
-                {g.is_active && (
-                  <button className={`btn btn-danger btn-sm ${styles.mobileBtn}`} onClick={() => setConfirmGuard(g)} disabled={deactivatingId === g.id}>
-                    {deactivatingId === g.id ? "Deactivating…" : "Deactivate"}
+                {g.is_active ? (
+                  <>
+                    <Link href={`/dashboard/guards/${g.id}`} className={`btn btn-secondary btn-sm ${styles.mobileBtn}`}>
+                      View
+                    </Link>
+                    <Link href={`/dashboard/guards/${g.id}/edit`} className={`btn btn-secondary btn-sm ${styles.mobileBtn}`}>
+                      Edit
+                    </Link>
+                    <button className={`btn btn-danger btn-sm ${styles.mobileBtn}`} onClick={() => setConfirmGuard(g)} disabled={deactivatingId === g.id}>
+                      {deactivatingId === g.id ? "Deactivating…" : "Deactivate"}
+                    </button>
+                  </>
+                ) : (
+                  <button className={`btn btn-success btn-sm ${styles.mobileBtn}`} onClick={() => setConfirmActivateGuard(g)} disabled={activatingId === g.id}>
+                    {activatingId === g.id ? "Activating…" : "Activate"}
                   </button>
                 )}
               </div>
@@ -316,6 +346,34 @@ export default function GuardsListPage() {
               </button>
               <button className={`btn btn-danger ${styles.modalBtn}`} onClick={handleDeactivate} disabled={!!deactivatingId}>
                 {deactivatingId ? "Deactivating…" : "Yes, Deactivate"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Activate Confirm Modal ── */}
+      {confirmActivateGuard && (
+        <div
+          className={styles.overlay}
+          onClick={(e) => {
+            if (e.target === e.currentTarget && !activatingId) setConfirmActivateGuard(null);
+          }}
+        >
+          <div className={styles.modal}>
+            <div className={styles.modalIcon}>✅</div>
+            <h3 className={styles.modalTitle}>Activate Guard</h3>
+            <p className={styles.modalDesc}>
+              You are about to activate <strong>{confirmActivateGuard.name}</strong> (
+              <span className={styles.modalEmpNo}>{confirmActivateGuard.employee_no}</span>).
+            </p>
+            <div className={styles.modalSuccess}>✔ This will restore the guard to active duty.</div>
+            <div className={styles.modalActions}>
+              <button className={`btn btn-secondary ${styles.modalBtn}`} onClick={() => setConfirmActivateGuard(null)} disabled={!!activatingId}>
+                Cancel
+              </button>
+              <button className={`btn btn-success ${styles.modalBtn}`} onClick={handleActivate} disabled={!!activatingId}>
+                {activatingId ? "Activating…" : "Yes, Activate"}
               </button>
             </div>
           </div>
